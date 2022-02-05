@@ -106,6 +106,34 @@ set ( LUA_SOCKET
     luasocket/udp.c 
 )
 
+#begin ThirdParty
+set (LuaCJsonSRC luacjson/strbuf.c luacjson/lua_cjson.c )
+set_property(
+    SOURCE ${LuaCJsonSRC}
+    APPEND
+    PROPERTY COMPILE_DEFINITIONS
+    LUA_LIB
+)
+list(APPEND THIRDPART_INC  luacjson)
+set (THIRDPART_SRC ${THIRDPART_SRC} ${LuaCJsonSRC})
+
+
+set (LuadbgSRC 
+luadbg/buffer.cpp
+luadbg/net_thread_queue.cpp
+luadbg/lua_net.cpp
+luadbg/luadbg.cpp
+)
+set_property(
+    SOURCE ${LuadbgSRC}
+    APPEND
+    PROPERTY COMPILE_DEFINITIONS
+    LUA_LIB
+)
+list(APPEND THIRDPART_INC  luadbg)
+set (THIRDPART_SRC ${THIRDPART_SRC} ${LuadbgSRC})
+#end ThirdParty
+
 if ( WIN32 AND NOT CYGWIN )
     list (APPEND LUA_SOCKET luasocket/wsocket.c)
 else ( )
@@ -140,6 +168,8 @@ endmacro(source_group_by_dir)
 
 source_group_by_dir(${CMAKE_CURRENT_SOURCE_DIR} LUA_SOCKET)
 source_group_by_dir(${CMAKE_CURRENT_SOURCE_DIR} LUA_CORE)
+source_group_by_dir(${CMAKE_CURRENT_SOURCE_DIR} LuaCJsonSRC)
+source_group_by_dir(${CMAKE_CURRENT_SOURCE_DIR} LuadbgSRC)
 source_group_by_dir(${CMAKE_CURRENT_SOURCE_DIR} LUA_LIB)
 source_group_by_dir(${CMAKE_CURRENT_SOURCE_DIR} XLUA_CORE)
 
